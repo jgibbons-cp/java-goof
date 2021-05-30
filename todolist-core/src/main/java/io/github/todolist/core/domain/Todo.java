@@ -44,7 +44,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import static io.github.todolist.core.Statics.NATIVE2ASCII;
+// Change this to set per this jvm
+//import static io.github.todolist.core.Statics.NATIVE2ASCII;
 
 /**
  * Todo entity.
@@ -82,10 +83,10 @@ public class Todo implements Serializable {
 
     public Todo(long userId, String title, boolean done, Priority priority, Date dueDate) {
         this.userId = userId;
-        
+
         if (title != null)
         		title = native2ascii(title);
-        
+
         this.title = title;
         this.done = done;
         this.priority = priority;
@@ -95,11 +96,12 @@ public class Todo implements Serializable {
     private static BufferedReader getOutput(Process p) {
         return new BufferedReader(new InputStreamReader(p.getInputStream()));
     }
-    
+
 	private String native2ascii(String title) {
 		System.out.println("Running: " + NATIVE2ASCII);
 		try {
-
+      String NATIVE2ASCII =
+        "/usr/lib/jvm/java-1.8.0-amazon-corretto.x86_64/bin/native2ascii"
 			BufferedWriter writer = new BufferedWriter(new FileWriter("title.txt"));
 	        		writer.write(title);
 	        		writer.close();
@@ -112,7 +114,7 @@ public class Todo implements Serializable {
 	        		    		System.out.println("Found non-ascii title. Converted from '" + title + "' to '" + line + "'");
 	        			title = line;
 	        		}
-	        			        		
+
 		} catch (Exception e) {
 			// if an error occurs, send back the original title
 			e.printStackTrace();
