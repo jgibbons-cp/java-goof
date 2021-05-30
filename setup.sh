@@ -9,6 +9,7 @@ tar zxvpf apache-maven-3.8.1-bin.tar.gz
 # install npm
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.0/install.sh | bash
 . ~/.nvm/nvm.sh
+export NVM_DIR="/home/ec2-user/.nvm"
 
 # install snyk cli
 nvm install node
