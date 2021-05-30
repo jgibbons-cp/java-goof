@@ -1,3 +1,6 @@
+#set env vars
+source ./env_vars.sh
+
 # install jdk 1.8
 sudo amazon-linux-extras enable corretto8
 sudo yum -y install java-1.8.0-amazon-corretto-devel
@@ -31,3 +34,6 @@ node_modules/.bin/datadog-ci dependencies upload deps.json --source snyk --servi
 
 # download java tracer
 wget -O dd-java-agent.jar https://dtdg.co/latest-java-tracer
+
+#let's go
+apache-maven-3.8.1/bin/mvn tomcat7:run
