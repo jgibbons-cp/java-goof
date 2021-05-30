@@ -1,6 +1,6 @@
 ## Java Goof
 
-Forked from [Snyk](https://gitbub.com/snyk/java-goof)  
+Forked from [Snyk](https://github.com/snyk/java-goof)  
 
 A vulnerable demo application, initially based on [Ben Hassine](https://github.com/benas/)'s [TodoMVC](https://github.com/benas/todolist-mvc).
 
