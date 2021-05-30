@@ -1,12 +1,10 @@
-# install maven
-sudo wget https://repos.fedorapeople.org/repos/dchen/apache-maven/epel-apache-maven.repo -O /etc/yum.repos.d/epel-apache-maven.repo
-sudo sed -i s/\$releasever/6/g /etc/yum.repos.d/epel-apache-maven.repo
-sudo yum -y install -y apache-maven
-yum remove java-1.7.0-openjdk
-
 # install jdk 1.8
 sudo amazon-linux-extras enable corretto8
 sudo yum -y install java-1.8.0-amazon-corretto-devel
+
+# install maven
+curl -O https://downloads.apache.org/maven/maven-3/3.8.1/binaries/apache-maven-3.8.1-bin.tar.gz
+tar zxvpf apache-maven-3.8.1-bin.tar.gz
 
 # install npm
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.0/install.sh | bash
