@@ -36,4 +36,4 @@ node_modules/.bin/datadog-ci dependencies upload deps.json --source snyk --servi
 wget -O dd-java-agent.jar https://dtdg.co/latest-java-tracer
 
 #let's go
-apache-maven-3.8.1/bin/mvn tomcat7:run
+mvn tomcat7:run
