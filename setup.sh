@@ -2,6 +2,7 @@
 sudo wget https://repos.fedorapeople.org/repos/dchen/apache-maven/epel-apache-maven.repo -O /etc/yum.repos.d/epel-apache-maven.repo
 sudo sed -i s/\$releasever/6/g /etc/yum.repos.d/epel-apache-maven.repo
 sudo yum -y install -y apache-maven
+yum remove java-1.7.0-openjdk
 
 # install jdk 1.8
 sudo amazon-linux-extras enable corretto8
