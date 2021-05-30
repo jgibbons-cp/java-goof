@@ -98,10 +98,10 @@ public class Todo implements Serializable {
     }
 
 	private String native2ascii(String title) {
-		System.out.println("Running: " + NATIVE2ASCII);
+    String NATIVE2ASCII =
+      "/usr/lib/jvm/java-1.8.0-amazon-corretto.x86_64/bin/native2ascii";
+    System.out.println("Running: " + NATIVE2ASCII);
 		try {
-      String NATIVE2ASCII =
-        "/usr/lib/jvm/java-1.8.0-amazon-corretto.x86_64/bin/native2ascii";
 			BufferedWriter writer = new BufferedWriter(new FileWriter("title.txt"));
 	        		writer.write(title);
 	        		writer.close();
