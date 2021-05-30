@@ -14,8 +14,8 @@ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.0/install.sh | b
 # install snyk cli
 nvm install node
 
-# install git
-sudo yum -y install git
+# install snyk
+npm install -g snyk
 
 # install datadog-ci
 npm install --save-dev @datadog/datadog-ci
