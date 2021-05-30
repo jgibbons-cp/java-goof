@@ -9,6 +9,11 @@ sudo yum -y install java-1.8.0-amazon-corretto-devel
 curl -O https://downloads.apache.org/maven/maven-3/3.8.1/binaries/apache-maven-3.8.1-bin.tar.gz
 tar zxvpf apache-maven-3.8.1-bin.tar.gz
 
+# download java tracer
+wget -O dd-java-agent.jar https://dtdg.co/latest-java-tracer
+
+mvn install
+
 # install npm
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.0/install.sh | bash
 . ~/.nvm/nvm.sh
@@ -36,5 +41,4 @@ node_modules/.bin/datadog-ci dependencies upload deps.json --source snyk --servi
 wget -O dd-java-agent.jar https://dtdg.co/latest-java-tracer
 
 #let's go
-mvn install
 mvn tomcat7:run
