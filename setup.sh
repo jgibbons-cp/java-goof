@@ -21,7 +21,7 @@ export NVM_DIR="/home/ec2-user/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 
 # install snyk cli
-#nvm install node
+nvm install node
 
 # install snyk
 npm install -g snyk
@@ -33,7 +33,7 @@ npm install --save-dev @datadog/datadog-ci
 snyk auth $SNYK_TOKEN
 
 # get vuln deps
-snyk test --print-deps --json > deps.json
+snyk test --file=pom.xml --print-deps --json > deps.json
 
 # upload deps to datadog
 node_modules/.bin/datadog-ci dependencies upload deps.json --source snyk --service javagoof --release-version .01
