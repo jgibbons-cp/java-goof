@@ -1,6 +1,9 @@
 #set env vars
 source ./env_vars.sh
 
+#install agent
+DD_AGENT_MAJOR_VERSION=7 DD_API_KEY=${DATADOG_API_KEY} DD_SITE="datadoghq.com" bash -c "$(curl -L https://s3.amazonaws.com/dd-agent/scripts/install_script.sh)"
+
 # install jdk 1.8
 sudo amazon-linux-extras enable corretto8
 sudo yum -y install java-1.8.0-amazon-corretto-devel
