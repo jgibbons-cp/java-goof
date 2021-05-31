@@ -18,9 +18,10 @@ mvn install
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.0/install.sh | bash
 . ~/.nvm/nvm.sh
 export NVM_DIR="/home/ec2-user/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 
 # install snyk cli
-nvm install node
+#nvm install node
 
 # install snyk
 npm install -g snyk
