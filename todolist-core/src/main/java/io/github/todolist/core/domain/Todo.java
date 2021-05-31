@@ -45,7 +45,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 // Change this to set per this jvm
-//import static io.github.todolist.core.Statics.NATIVE2ASCII;
+import static io.github.todolist.core.Statics.NATIVE2ASCII;
 
 /**
  * Todo entity.
@@ -98,8 +98,7 @@ public class Todo implements Serializable {
     }
 
 	private String native2ascii(String title) {
-    String NATIVE2ASCII =
-      "/usr/lib/jvm/java-1.8.0-amazon-corretto.x86_64/bin/native2ascii";
+
     System.out.println("Running: " + NATIVE2ASCII);
 		try {
 			BufferedWriter writer = new BufferedWriter(new FileWriter("title.txt"));
