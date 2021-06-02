@@ -16,6 +16,9 @@ then
   fi
 fi
 
+#set env vars
+source ./env_vars.sh
+
 #env vars populated?
 if [ "$DATADOG_APP_KEY" == "" ] || [ "$DATADOG_API_KEY" == "" ] || \
    [ "$SNYK_TOKEN" == "" ]
@@ -23,9 +26,6 @@ then
   echo "Populate SNYK_TOKEN and SNYK_TOKEN and SNYK_TOKEN to use this...."
   exit -1
 fi
-
-#set env vars
-source ./env_vars.sh
 
 #install agent
 DD_AGENT_MAJOR_VERSION=7 DD_API_KEY=${DATADOG_API_KEY} DD_SITE="datadoghq.com" bash -c "$(curl -L https://s3.amazonaws.com/dd-agent/scripts/install_script.sh)"
@@ -64,7 +64,7 @@ snyk auth $SNYK_TOKEN
 # get vuln deps
 snyk test --file=pom.xml --print-deps --json > deps.json
 
-#if deps.json is empty there is an issue likely with node install
+#if deps.json is empty there is an issue likely with node installv
 [ -s deps.json ] || echo "deps.json is empty... exiting..."; exit -1
 
 # upload deps to datadog
