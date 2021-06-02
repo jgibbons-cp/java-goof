@@ -39,7 +39,9 @@ used for this is the following [webinar](https://www.youtube.com/watch?v=oEFAQZX
  Execute it with `cd exploits && sh struts-exploit.sh`  Run it a few times to
  ensure it is not sampled out and then you can stop here if you want.  When you see
  a profile with "Critical" in the "Vulnerability Severity" column click in then
- go to "Analysis" and you can see the struts expoit.
+ go to "Analysis" and you can see the struts expoit.  You can also change the
+ command in struts-exploit.sh (e.g printenv and you can see API keys
+etc. -  nice way to show benefits of using a container for example).
  * Next we will exploit the app from UI using the zip-slip vulnerability.  The
  reference I used is from
  [a Snyk research post](https://snyk.io/research/zip-slip-vulnerability) and a
@@ -52,7 +54,9 @@ used for this is the following [webinar](https://www.youtube.com/watch?v=oEFAQZX
    click the link for 'Upload Files' and upload zip-slip-datadog_example.zip
    Now click 'My Files' and you will see `root_of_repo/public` and one file,
    good.txt.  The new native2ascii binary will overwrite the Java binary by
-   traversing the host directory structure outside of the upload (public) directory.  
+   traversing the host directory structure outside of the upload (public)
+   directory.  This is possible because we changed the owner of the file with
+   the last exploit.
    Now add another todo and you will see Gotcha! instead of your todo as we have
    executed code using our binary in the the webapp.  The code that is exploited
    is in todolist-core/src/main/java/io/github/todolist/core/domain/Todo.java  
@@ -61,7 +65,7 @@ used for this is the following [webinar](https://www.youtube.com/watch?v=oEFAQZX
    exploited is `public Todo(...)`  Add three of four todos to ensure sampling does
    not exclude the run in a profile and in a few minutes you should see Critical
    in the "Vulnerability Severity" column.  Click into the profile and then go
-   into Analysis and you will see a hibernate vulnerability.
+   into Analysis and you will see a struts or hibernate vulnerability.
   * Enjoy!
 
 
