@@ -8,10 +8,60 @@ The goal of this application is to demonstrate through example how to find, expl
 
 This repo is still incomplete, a work in progress to support related presentations.
 
-Requirements for Datadog Demo Purpose
+Datadog Demo Purpose
 --
 
-Original README... left
+* NOTE - ONLY tested on Amazon Linux 2 AMI (HVM), SSD Volume Type, T2 medium
+* In env_vars.sh Set DATADOG_APP_KEY, DATADOG_API_KEY and SNYK_TOKEN [snyk]
+(https://support.snyk.io/hc/en-us/articles/360003812538-Install-the-Snyk-CLI) -
+you will need an API key
+* To configure the vm and start the webapp run `sh setup.sh` from the root directory
+* Once the webapp is up, you can access is at <FQDN>:8080 (8080 will need to be
+open for external access) and login with foo@bar.org / foobar
+* You can then go to the Datadog app and look at the
+[traces](https://app.datadoghq.com/apm/traces) coming in and the
+[profiles](https://app.datadoghq.com/profiling) (after a few minutes).  In the
+profiles, at first, you will see "None Detected" under the "Vulnerability
+Severity" column.  
+* Now we are set to exploit the application.  
+* in a shell in the repo, execute `export DOMAIN_NAME=<domain_name>` where
+<domain_name> is either localhost or the FQDN of the host (8080 will need to be
+open for external access)
+* The first exploit - change permission on a root Java binary.  The reference
+used for this is the following [webinar](https://www.youtube.com/watch?v=oEFAQZXYpfQ)
+ hosted by Snyk and Datadog.  This uses a vulnerability in struts that allows
+ shell commands on the host that is running the webapp.  In the repo root,
+ execute `vi exploits/struts-exploit-headers.txt`  This is a multipart/form-data
+ header that struts understands and allows the execution of a shell command.  Next,
+ `vi exploits/struts-exploit.sh` and let's take a look at the shell code.  It uses
+ sed to replace COMMAND with chown to change the permissions of the native2ascii
+ binary in the JVM.  This is the exploit that was used in the Experian attack.  
+ Execute it with `sh exploits/struts-exploit.sh`
+ * Next we will exploit the app from UI using the zip-slip vulnerability.  The
+ reference I used is from
+ [a Snyk research post](https://snyk.io/research/zip-slip-vulnerability) and a
+ webinar included on the [page](https://www.youtube.com/watch?v=l1MT5lr4p9o).  
+ This uses Java code that does not check directory structure when unpacking a
+ zip file.  It takes the user up 20 levels of ../ (if you hit root you will
+   keep traversing back to root) then we traverse to the JVM directory to
+   overwrite the native2ascii binary with our own binary and executable code.  In
+   the application go to <FQDN>:8080/ and create a few todos.  Then go to
+   <FQDN>:8080/ and click and upload zip-slip-datadog_example.zip  When you then
+   look in <palce> you will see good.txt in the public directory and the new
+   native2ascii binary will overwrite the Java binary.  Now add another todo
+   and you will see Gotcha! instead of your todo as we have executed code using
+   the app.  The code that is exploited is in
+   todolist-core/src/main/java/io/github/todolist/core/domain/Todo.java  
+   import static io.github.todolist.core.Statics.NATIVE2ASCII; sets the JDK
+   location if JAVA_HOME is unset.  We set it in env_vars.sh  The method that is
+   exploited is public Todo()  Add three of four todos to ensure sampling does
+   not exclude the run in a profile and in a few minutes you should see Critical
+   in the "Vulnerability Severity" column.  Click into the profile and then go
+   into Analysis.
+  * Enjoy!
+
+
+Original README below ... left as was...
 --
 
 ## Build and run Todolist MVC

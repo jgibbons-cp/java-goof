@@ -1,3 +1,29 @@
+#is Amazon Linux 2 - only tested on this AMI?
+continue="n"
+
+cat /etc/system-release | grep "Amazon Linux release 2" > /dev/null
+
+if [ "$?" -ne "0" ]
+then
+  echo "Only tested on Amazon Linux 2... Do you want to continue (y/n)? "
+  read continue
+  continue=${continue^^}
+
+  if [ "$continue" == "N" ]
+  then
+    echo "OK, exiting..."
+    exit 0
+  fi
+fi
+
+#env vars populated?
+if [ "$DATADOG_APP_KEY" == "" ] || [ "$DATADOG_API_KEY" == "" ] || \
+   [ "$SNYK_TOKEN" == "" ]
+then
+  echo "Populate SNYK_TOKEN and SNYK_TOKEN and SNYK_TOKEN to use this...."
+  exit -1
+fi
+
 #set env vars
 source ./env_vars.sh
 
