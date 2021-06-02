@@ -64,6 +64,9 @@ snyk auth $SNYK_TOKEN
 # get vuln deps
 snyk test --file=pom.xml --print-deps --json > deps.json
 
+#if deps.json is empty there is an issue likely with node install
+[ -s deps.json ] || echo "deps.json is empty... exiting..."; exit -1
+
 # upload deps to datadog
 node_modules/.bin/datadog-ci dependencies upload deps.json --source snyk --service javagoof --release-version .01
 

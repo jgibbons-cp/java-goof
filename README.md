@@ -12,11 +12,11 @@ Datadog Demo Purpose
 --
 
 * NOTE - ONLY tested on Amazon Linux 2 AMI (HVM), SSD Volume Type, T2 medium
-* In env_vars.sh Set DATADOG_APP_KEY, DATADOG_API_KEY and SNYK_TOKEN [snyk]
-(https://support.snyk.io/hc/en-us/articles/360003812538-Install-the-Snyk-CLI) -
+* In env_vars.sh set DATADOG_APP_KEY, DATADOG_API_KEY and SNYK_TOKEN
+[snyk](https://support.snyk.io/hc/en-us/articles/360003812538-Install-the-Snyk-CLI) -
 you will need an API key
 * To configure the vm and start the webapp run `sh setup.sh` from the root directory
-* Once the webapp is up, you can access is at <FQDN>:8080 (8080 will need to be
+* Once the webapp is up, you can access is at FQDN:8080 (8080 will need to be
 open for external access) and login with foo@bar.org / foobar
 * You can then go to the Datadog app and look at the
 [traces](https://app.datadoghq.com/apm/traces) coming in and the
@@ -24,7 +24,7 @@ open for external access) and login with foo@bar.org / foobar
 profiles, at first, you will see "None Detected" under the "Vulnerability
 Severity" column.  
 * Now we are set to exploit the application.  
-* in a shell in the repo, execute `export DOMAIN_NAME=<domain_name>` where
+* In a shell, execute `export DOMAIN_NAME=<domain_name>` where
 <domain_name> is either localhost or the FQDN of the host (8080 will need to be
 open for external access)
 * The first exploit - change permission on a root Java binary.  The reference
@@ -35,7 +35,7 @@ used for this is the following [webinar](https://www.youtube.com/watch?v=oEFAQZX
  header that struts understands and allows the execution of a shell command.  Next,
  `vi exploits/struts-exploit.sh` and let's take a look at the shell code.  It uses
  sed to replace COMMAND with chown to change the permissions of the native2ascii
- binary in the JVM.  This is the exploit that was used in the Experian attack.  
+ binary in the JVM.  This is the method of exploit that was used in the Experian attack.  
  Execute it with `sh exploits/struts-exploit.sh`
  * Next we will exploit the app from UI using the zip-slip vulnerability.  The
  reference I used is from
@@ -45,9 +45,9 @@ used for this is the following [webinar](https://www.youtube.com/watch?v=oEFAQZX
  zip file.  It takes the user up 20 levels of ../ (if you hit root you will
    keep traversing back to root) then we traverse to the JVM directory to
    overwrite the native2ascii binary with our own binary and executable code.  In
-   the application go to <FQDN>:8080/ and create a few todos.  Then go to
+   the application go to FQDN:8080/ and create a few todos.  Then go to
    <FQDN>:8080/ and click and upload zip-slip-datadog_example.zip  When you then
-   look in <palce> you will see good.txt in the public directory and the new
+   look in root_of_repo/public you will see good.txt in the public directory and the new
    native2ascii binary will overwrite the Java binary.  Now add another todo
    and you will see Gotcha! instead of your todo as we have executed code using
    the app.  The code that is exploited is in
