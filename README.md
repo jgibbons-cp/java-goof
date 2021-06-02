@@ -36,7 +36,10 @@ used for this is the following [webinar](https://www.youtube.com/watch?v=oEFAQZX
  `vi exploits/struts-exploit.sh` and let's take a look at the shell code.  It uses
  sed to replace COMMAND with chown to change the permissions of the native2ascii
  binary in the JVM.  This is the method of exploit that was used in the Experian attack.  
- Execute it with `sh exploits/struts-exploit.sh`
+ Execute it with `cd exploits && sh struts-exploit.sh`  Run it a few times to
+ ensure it is not sampled out and then you can stop here if you want.  When you see
+ a profile with "Critical" in the "Vulnerability Severity" column click in then
+ go to "Analysis" and you can see the struts expoit.
  * Next we will exploit the app from UI using the zip-slip vulnerability.  The
  reference I used is from
  [a Snyk research post](https://snyk.io/research/zip-slip-vulnerability) and a
@@ -58,7 +61,7 @@ used for this is the following [webinar](https://www.youtube.com/watch?v=oEFAQZX
    exploited is `public Todo(...)`  Add three of four todos to ensure sampling does
    not exclude the run in a profile and in a few minutes you should see Critical
    in the "Vulnerability Severity" column.  Click into the profile and then go
-   into Analysis.
+   into Analysis and you will see a hibernate vulnerability.
   * Enjoy!
 
 
