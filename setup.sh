@@ -65,13 +65,14 @@ snyk auth $SNYK_TOKEN
 snyk test --file=pom.xml --print-deps --json > deps.json
 
 #if deps.json is empty there is an issue likely with node installv
-[ -s deps.json ] || echo "deps.json is empty... exiting..."; exit -1
+if [ ! -s deps.json ]
+then
+  echo "deps.json is empty... exiting..."
+  exit -1
+fi
 
 # upload deps to datadog
 node_modules/.bin/datadog-ci dependencies upload deps.json --source snyk --service javagoof --release-version .01
-
-# download java tracer
-wget -O dd-java-agent.jar https://dtdg.co/latest-java-tracer
 
 #let's go
 mvn tomcat7:run

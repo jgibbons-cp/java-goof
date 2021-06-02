@@ -45,16 +45,17 @@ used for this is the following [webinar](https://www.youtube.com/watch?v=oEFAQZX
  zip file.  It takes the user up 20 levels of ../ (if you hit root you will
    keep traversing back to root) then we traverse to the JVM directory to
    overwrite the native2ascii binary with our own binary and executable code.  In
-   the application go to FQDN:8080/ and create a few todos.  Then go to
-   <FQDN>:8080/ and click and upload zip-slip-datadog_example.zip  When you then
-   look in root_of_repo/public you will see good.txt in the public directory and the new
-   native2ascii binary will overwrite the Java binary.  Now add another todo
-   and you will see Gotcha! instead of your todo as we have executed code using
-   the app.  The code that is exploited is in
-   todolist-core/src/main/java/io/github/todolist/core/domain/Todo.java  
-   import static io.github.todolist.core.Statics.NATIVE2ASCII; sets the JDK
-   location if JAVA_HOME is unset.  We set it in env_vars.sh  The method that is
-   exploited is public Todo()  Add three of four todos to ensure sampling does
+   the application go to `FQDN:8080/todo/new` and create a few todos.  Then
+   click the link for 'Upload Files' and upload zip-slip-datadog_example.zip  
+   Now click 'My Files' and you will see `root_of_repo/public` and one file
+   good.txt.  The new native2ascii binary will overwrite the Java binary by
+   traversing the host directory structure outside of the upload (public) directory.  
+   Now add another todo and you will see Gotcha! instead of your todo as we have
+   executed code using our binary in the the webapp.  The code that is exploited
+   is in todolist-core/src/main/java/io/github/todolist/core/domain/Todo.java  
+   `import static io.github.todolist.core.Statics.NATIVE2ASCII;` sets the JDK
+   location if `$JAVA_HOME` is unset.  We set it in env_vars.sh  The method that is
+   exploited is `public Todo(...)`  Add three of four todos to ensure sampling does
    not exclude the run in a profile and in a few minutes you should see Critical
    in the "Vulnerability Severity" column.  Click into the profile and then go
    into Analysis.
