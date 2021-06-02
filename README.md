@@ -35,7 +35,7 @@ used for this is the following [webinar](https://www.youtube.com/watch?v=oEFAQZX
  header that struts understands and allows the execution of a shell command.  Next,
  `vi exploits/struts-exploit.sh` and let's take a look at the shell code.  It uses
  sed to replace COMMAND with chown to change the permissions of the native2ascii
- binary in the JVM.  This is the method of exploit that was used in the Experian attack.  
+ binary in the JVM.  This is the method of exploit that was used in the Experian attack.
  Execute it with `cd exploits && sh struts-exploit.sh`  Run it a few times to
  ensure it is not sampled out and then you can stop here if you want.  When you see
  a profile with "Critical" in the "Vulnerability Severity" column click in then
@@ -43,14 +43,14 @@ used for this is the following [webinar](https://www.youtube.com/watch?v=oEFAQZX
  * Next we will exploit the app from UI using the zip-slip vulnerability.  The
  reference I used is from
  [a Snyk research post](https://snyk.io/research/zip-slip-vulnerability) and a
- webinar included on the [page](https://www.youtube.com/watch?v=l1MT5lr4p9o).  
+ webinar included on the [page](https://www.youtube.com/watch?v=l1MT5lr4p9o).
  This uses Java code that does not check directory structure when unpacking a
  zip file.  It takes the user up 20 levels of ../ (if you hit root you will
    keep traversing back to root) then we traverse to the JVM directory to
    overwrite the native2ascii binary with our own binary and executable code.  In
    the application go to `FQDN:8080/todo/new` and create a few todos.  Then
-   click the link for 'Upload Files' and upload zip-slip-datadog_example.zip  
-   Now click 'My Files' and you will see `root_of_repo/public` and one file
+   click the link for 'Upload Files' and upload zip-slip-datadog_example.zip
+   Now click 'My Files' and you will see `root_of_repo/public` and one file,
    good.txt.  The new native2ascii binary will overwrite the Java binary by
    traversing the host directory structure outside of the upload (public) directory.  
    Now add another todo and you will see Gotcha! instead of your todo as we have
