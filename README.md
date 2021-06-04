@@ -68,6 +68,38 @@ etc. -  nice way to show benefits of using a container for example).
    into Analysis and you will see a struts or hibernate vulnerability.
   * Enjoy!
 
+Datadog Setup
+--
+
+The Datadog part of this uses the Datadog
+[agent](https://docs.datadoghq.com/agent/), Datadog
+[Java APM](https://docs.datadoghq.com/tracing/setup_overview/setup/java/?tab=containers),
+the Datadog
+[continuous profiler](https://docs.datadoghq.com/tracing/profiler/enabling/) and
+the Datadog [Snyk integration](https://docs.datadoghq.com/integrations/snyk/).  
+
+The configuration is as follows:  
+
+  * Install the agent - done in setup.sh in the line beginning with
+  `DD_AGENT_MAJOR_VERSION`  
+  * Pull down the tracer - done in setup.sh in the line beginning with `wget`  
+  * Inject the tracer and system properties in the JAVA_OPTS. Done via
+source env_vars.sh  
+    * MAVEN_OPTS="-javaagent:dd-java-agent.jar -Ddd.profiling.enabled=true -XX:FlightRecorderOptions=stackdepth=256 -Ddd.service=javagoof -Ddd.env=lab -Ddd.version=.01"
+      * -javaagent:dd-java-agent.jar - add the tracer
+      * -Ddd.profiling.enabled=true -XX:FlightRecorderOptions=stackdepth=256 -
+    add the profiler
+      * [Unified Service Tagging](https://docs.datadoghq.com/getting_started/tagging/unified_service_tagging/?tab=kubernetes) -  
+        * -Ddd.service=javagoof - add the service
+        * -Ddd.env=lab - add the environment
+        * -Ddd.version=.01 - add the version
+      * Authenticate to Snyk - done in setup.sh in the line beginning with
+      `snyk auth`
+      * Generate the dependency graph - done in setup.sh in the line beginning
+      with `snyk test` - note we use the pom rather than package.json
+      * Upload the dependency graph to Datadog in setup.sh in the line beginning
+      with `node_modules/.bin/datadog-ci` - note the service and version must
+      match that for the profile.
 
 Original README below ... left as was...
 --
