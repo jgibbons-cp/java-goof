@@ -1,4 +1,4 @@
-#test
+#testing
 name: snyk-vulnerability-assessment
 on: push
 env:
