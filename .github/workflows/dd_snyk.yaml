@@ -26,7 +26,7 @@ jobs:
       - name: Install Datadog CI
         run: npm install -g --save-dev @datadog/datadog-ci
         shell: bash
-      - where
+      - name: where
         run: ls -l && cd java-goof
         shell: bash
       - name: Build artifacts with Maven
