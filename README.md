@@ -101,6 +101,32 @@ source env_vars.sh
       with `node_modules/.bin/datadog-ci` - note the service and version must
       match that for the profile.
 
+Datadog Alerting
+--
+
+Now that Datadog any Snyk have detected a critical runtime vulnerability, we
+should alert the team.  This can be done using Datadog
+[Synthetics](https://docs.datadoghq.com/synthetics/), specifically Datadog's
+[Browser Testing](https://docs.datadoghq.com/synthetics/browser_tests/?tab=requestoptions).  
+There can be a cat/mouse issue because you are trying to login to Datadog in
+the test while you are using the app.  Therefore, it will be necessary to
+use incognito mode.  The documentation for this is
+[here](https://docs.datadoghq.com/synthetics/troubleshooting/#i-dont-see-the-login-page-in-the-recorder-what-is-happening).  The steps for the test are as follow:  
+
+* Create two global variables to use for username/password (obfuscated) to login
+ to Datadog using a test account  
+* Start recording  
+* Go to incognito mode  
+* Populate username/password using the variables  
+* Navigate to the profile page with the following KV pairs:  
+  * Service:service - for this is javagoof  
+  * Env:env - for this is lab  
+  * Version:version - for this is .01  
+  * @metrics.core_vulns_severity_max:critical (can be found in the facts by
+    searching for vuln and clicking Highest Severity then Critical)  
+  * Test that the following text is present on the page "showing 0 profiles"  
+  * Finish configuring it and you are set to be alerted  
+
 Original README below ... left as was...
 --
 
