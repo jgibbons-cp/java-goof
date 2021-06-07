@@ -20,9 +20,9 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 12.x
-      #- name: Install Snyk
-      #  run: npm install -g snyk
-      #  shell: bash
+      - name: Install Snyk
+        run: npm install -g snyk
+        shell: bash
       - name: Install Datadog CI
         run: npm install -g --save-dev @datadog/datadog-ci
         shell: bash
