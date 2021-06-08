@@ -96,7 +96,7 @@
                         <arg>--file=pom.xml</arg>
                         <arg>--print-deps</arg>
                         <arg>--json</arg>
-                        <arg>--json-file-output=/home/runner/work/java-goof/deps.json</arg>
+                        <arg>--json-file-output=/home/runner/work/java-goof/java-goof/deps.json</arg>
                       </args>
                     </configuration>
                   </plugin>
