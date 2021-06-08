@@ -7,7 +7,7 @@
     <version>1.0-SNAPSHOT</version>
     <name>Todolist MVC parent module</name>
     <description>A vulnerable demo application, initially based on Ben Hassine's TodoMVC.</description>
-    <url>https://github.com/snyk/java-goof</url>
+    <url>https://github.com/jgibbons-cp/java-goof</url>
 
     <properties>
         <spring.version>3.2.6.RELEASE</spring.version>
@@ -96,7 +96,7 @@
                         <arg>--file=pom.xml</arg>
                         <arg>--print-deps</arg>
                         <arg>--json</arg>
-                        <arg>--json-file-output=./deps.json</arg>
+                        <arg>--json-file-output=/home/runner/work/java-goof/deps.json</arg>
                       </args>
                     </configuration>
                   </plugin>
