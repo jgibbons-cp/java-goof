@@ -32,7 +32,7 @@ jobs:
         shell: bash
         continue-on-error: true
       - name: where
-        run: pwd; ls -lR ; cat deps.json
+        run: pwd; ls ; cat deps.json
         shell: bash
       - uses: datadog/github-action-vulnerability-analysis@master
         with:
